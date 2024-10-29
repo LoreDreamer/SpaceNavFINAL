@@ -64,8 +64,8 @@ public class Ball2 extends Obstacle implements Movement {
     @Override
     public void move() {
         // Cambia las coordenadas x e y de Ball2 de acuerdo a sus velocidades actuales
-        setX(getX() + getXSpeed());
-        setY(getY() + getYSpeed());
+        setX(getX() + getXSpeed() + 1);
+        setY(getY() + getYSpeed() + 1);
 
         // Rebotar cuando el borde del sprite toca el borde de la pantalla
         if (x < 0) {

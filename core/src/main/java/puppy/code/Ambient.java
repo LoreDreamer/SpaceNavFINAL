@@ -6,20 +6,19 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.audio.Music;
 
-public class Ambiente {
+public class Ambient {
 
-	private Obstaculos obstaculos;
-	private Jugador jugador;
+	private Obstacles obstaculos;
+	private Player jugador;
 	private Sound sonidoExplocion;
 	private int vidas;
 	
-	public Ambiente(SpaceNavigation game, int ronda, int vidas, int score,  
-            int velXAsteroides, int velYAsteroides, int cantidad, Sound sonidoExplocion, SpriteBatch batch)
+	public Ambient(SpaceNavigation game, int ronda, int vidas, int score, Sound sonidoExplocion, SpriteBatch batch)
 	{
 		this.vidas = vidas;
 		this.sonidoExplocion = sonidoExplocion;
-		obstaculos = new Obstaculos(velXAsteroides, velXAsteroides, cantidad, sonidoExplocion);
-		jugador = new Jugador(batch, vidas);	
+		obstaculos = new Obstacles(1, 1, 10);
+		jugador = new Player();	
 	}
 	
 	public void inicializar()
@@ -46,7 +45,6 @@ public class Ambiente {
 		return obstaculos.hayObstaculos();
 	}
 	
-    // Método para manejar las colisiones entre asteroides
     public void handleObstacleCollisions() 
     {
         for (int i = 0; i < obstaculos.getObstaculos().size(); i++) 
@@ -98,19 +96,18 @@ public class Ambiente {
         return score;
     }
 	
-    public void proceedToNextLevel(Music gameMusic, int velXAsteroides, int velYAsteroides, int cantAsteroides, int ronda, SpaceNavigation game, int score) {
+    public void proceedToNextLevel(Music gameMusic, int ronda, SpaceNavigation game, int score) {
         gameMusic.stop(); // Detener la música
         ronda++; // Incrementa la ronda
-
+        
+        obstaculos.increaseDifficulty();
+        
         // Crear una nueva instancia de PantallaJuego con los valores actualizados
         PantallaJuego nuevaPantalla = new PantallaJuego(
             game,
             ronda,
             vidas,
-            score,
-            velXAsteroides + (ronda/5),  // Aumenta la velocidad según la ronda, por ejemplo
-            velYAsteroides + (ronda/5),  // Aumenta la velocidad según la ronda
-            cantAsteroides + ronda * 2  // Aumenta la cantidad de asteroides
+            score
         );
         
         // Cambia a la nueva pantalla

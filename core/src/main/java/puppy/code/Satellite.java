@@ -8,8 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.Random;
 
 public class Satellite extends Obstacle implements Movement 
-{
-	private Sprite spr;  
+{ 
     private float scale; // Tamaño del satélite
     private int bulletHitCount; // Contador de impactos de bala
     private static final int TARGET_SIZE_PX = 40; // Tamaño deseado en píxeles (1 cm)
@@ -55,9 +54,9 @@ public class Satellite extends Obstacle implements Movement
 
         // Determinar si el número es par o impar
         if (randomNumber % 2 == 0) { // Par: mover de arriba a abajo
-            setY(y + getYSpeed()); // Mover verticalmente
+            setY(y + getYSpeed() - 1); // Mover verticalmente
         } else { // Impar: mover de lado a lado
-            setX(x + getXSpeed()); // Mover horizontalmente
+            setX(x + getXSpeed() - 1); // Mover horizontalmente
         }
 
         // Rebotar en los bordes de la pantalla

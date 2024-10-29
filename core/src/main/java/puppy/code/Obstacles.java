@@ -3,13 +3,11 @@ package puppy.code;
 import java.util.ArrayList;
 import java.util.Random;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.audio.Music;
 
 
-public class Obstaculos {
+public class Obstacles {
 	
 	private int velXAsteroides; // Velocidad en el eje X de los asteroides
     private int velYAsteroides; // Velocidad en el eje Y de los asteroides
@@ -17,22 +15,19 @@ public class Obstaculos {
     private int velXSatelites;
     private int velYSatelites;
     private int cantAsteroides; 
-    private Sound sonidoExplocion;
     
     private ArrayList<Obstacle> obstaculos;
    
-    public Obstaculos(int velXAsteroides, int velYAsteroides, int cantAsteroides, Sound sonidoExplocion) {
+    public Obstacles(int velXAsteroides, int velYAsteroides, int cantAsteroides) {
 		
 		this.velXAsteroides = velXAsteroides;
 		this.velYAsteroides = velYAsteroides;
 		
-		this.velXSatelites = velXAsteroides/2;
-		this.velYSatelites = velYAsteroides/2;
+		this.velXSatelites = velXAsteroides/3;
+		this.velYSatelites = velYAsteroides/3;
 		
 		this.cantAsteroides = cantAsteroides;
-		this.cantSatelites = cantAsteroides/2;
-		
-		this.sonidoExplocion = sonidoExplocion;
+		this.cantSatelites = cantAsteroides/3;
 		
 		obstaculos = new ArrayList<>(); // Lista de obstaculos
 		
@@ -82,20 +77,6 @@ public class Obstaculos {
             obs.draw(batch); // Dibuja cada obstaculo
         }
     }
-    
-       private void handleObstacleCollisions(Nave4 nave) 
-    {
-        for (int i = 0; i < obstaculos.size(); i++) 
-        {
-            if (nave.checkCollision(obstaculos.get(i))) 
-            {
-            	sonidoExplocion.play(); // Reproduce sonido de explosión
-                nave.setVidas(nave.getVidas()); // Reduce las vidas de la nave
-                obstaculos.remove(i); // Remueve el asteroide
-                i--; // Ajusta el índice
-            }
-        }
-    } 
        
     public boolean hayObstaculos() {
     	if(obstaculos.isEmpty()) return false;
@@ -104,6 +85,33 @@ public class Obstaculos {
        
     public ArrayList<Obstacle> getObstaculos(){
     	return obstaculos;
+    }
+    
+    public void increaseDifficulty() {
+    	 	
+        increaseVelocity();
+        increaseQuantity();
+    }
+    
+    private void increaseVelocity() {
+    	
+    	this.velXAsteroides += 0.5;
+    	this.velYAsteroides += 0.5;
+    	
+    	this.velXAsteroides += 0.3;
+    	this.velYSatelites += 0.3;
+    }
+    
+    private void increaseQuantity() {
+    	
+    	Random random = new Random();
+    	int randomNumber = random.nextInt(3) + 1;
+    	
+    	if (randomNumber == 1)
+    		this.cantSatelites++;
+
+    	this.cantAsteroides += 2;
+    
     }
       
 }

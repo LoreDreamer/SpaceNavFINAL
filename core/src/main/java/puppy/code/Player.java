@@ -3,21 +3,18 @@ package puppy.code;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Jugador 
+public class Player 
 {
-	private SpriteBatch batch; 
+
 	private Nave4 nave; //objeto nave
 	private ArrayList<Bullet> balas; // Lista de balas 
 	
-	public Jugador(SpriteBatch batch, int vidas)
+	public Player()
 	{
-		this.batch = batch;
 		balas = new ArrayList<Bullet>(); 
 	}
 	

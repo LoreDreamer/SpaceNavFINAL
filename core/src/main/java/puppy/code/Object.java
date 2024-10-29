@@ -3,7 +3,7 @@ package puppy.code;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 // Clase que define objetos que podran ser tomados por el jugador para recibir beneficios o perjuicios
-public abstract class Objeto {
+public abstract class Object {
 	private int x;
     private int y;
     private int score;
@@ -11,7 +11,7 @@ public abstract class Objeto {
     private float time;
     private Sprite spr;
     
-    public Objeto (int x, int y, int score, int effect, float time, Sprite spr) {
+    public Object (int x, int y, int score, int effect, float time, Sprite spr) {
     	this.x = x;
     	this.y = y;
     	this.score = score;

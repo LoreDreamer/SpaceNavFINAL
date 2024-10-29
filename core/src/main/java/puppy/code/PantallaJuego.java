@@ -29,21 +29,19 @@ public class PantallaJuego implements Screen
 
     private int score; // Puntuación del jugador
     private int ronda; // Ronda actual
-    private int velXAsteroides; // Velocidad en el eje X de los asteroides
-    private int velYAsteroides; // Velocidad en el eje Y de los asteroides
-    private int cantAsteroides; 
+
     private SpriteBatch spriteBatch;
     private Mesh mesh;
     private Texture fondo;
-    private Ambiente ambiente;
+    private Ambient ambiente;
 
-    public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score, int velXAsteroides, int velYAsteroides, int cantidad) {
+    public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score) {
         this.game = game; // Inicializa la referencia al juego
         this.ronda = ronda; // Establece la ronda actual
         this.score = score; // Establece la puntuación actual
         isPaused = false;
         initialize(); // Inicializa la configuración del juego
-        ambiente = new Ambiente(game, ronda, vidas, score, velXAsteroides, velYAsteroides, cantidad, explosionSound, batch);
+        ambiente = new Ambient(game, ronda, vidas, score, explosionSound, batch);
         ambiente.inicializar();
     }
     
@@ -177,7 +175,7 @@ public class PantallaJuego implements Screen
         batch.end(); // Termina el batch de dibujo
         
         if (ambiente.hayObstaculos() == false) { //reemplazar por hayObstaculos de ambiente
-            ambiente.proceedToNextLevel(gameMusic, velXAsteroides, velYAsteroides, cantAsteroides, ronda, game, score); // Cambia de nivel si no hay asteroides ni satélites
+            ambiente.proceedToNextLevel(gameMusic, ronda, game, score); // Cambia de nivel si no hay asteroides ni satélites
         }
     }
 
