@@ -3,8 +3,10 @@ package puppy.code;
 import java.util.ArrayList;
 import java.util.Random;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.audio.Music;
 
 
 public class Obstaculos {
@@ -15,19 +17,22 @@ public class Obstaculos {
     private int velXSatelites;
     private int velYSatelites;
     private int cantAsteroides; 
+    private Sound sonidoExplocion;
     
     private ArrayList<Obstacle> obstaculos;
    
-    public Obstaculos(int velXAsteroides, int velYAsteroides, int cantAsteroides, int cantSatelites) {
+    public Obstaculos(int velXAsteroides, int velYAsteroides, int cantAsteroides, Sound sonidoExplocion) {
 		
 		this.velXAsteroides = velXAsteroides;
 		this.velYAsteroides = velYAsteroides;
 		
-		this.velXAsteroides = velXAsteroides/2;
+		this.velXSatelites = velXAsteroides/2;
 		this.velYSatelites = velYAsteroides/2;
 		
 		this.cantAsteroides = cantAsteroides;
-		this.cantSatelites = cantSatelites/2;
+		this.cantSatelites = cantAsteroides/2;
+		
+		this.sonidoExplocion = sonidoExplocion;
 		
 		obstaculos = new ArrayList<>(); // Lista de obstaculos
 		
@@ -53,7 +58,7 @@ public class Obstaculos {
 		
 		Random ra = new Random();
 		
-		for (int i = 0; i < cantSatelites; i++) {
+		for (int k = 0; k < cantSatelites; k++) {
             Obstacle satelite = new Satellite(
                     ra.nextInt((int) Gdx.graphics.getWidth()), // Posición X aleatoria
                     50 + ra.nextInt((int) Gdx.graphics.getHeight() - 50), // Posición Y aleatoria
@@ -66,30 +71,39 @@ public class Obstaculos {
         }
 	}
 	
-	private void updateObstaculos() {
+	public void updateObstaculos() {
         for(Obstacle obj : obstaculos) {
             obj.move(); // Llama al método update de cada satélite
         }
     }
     
-    private void drawObstaculos(SpriteBatch batch) {
-        for (Obstacle obj : obstaculos) {
-            obj.draw(batch); // Dibuja cada asteroide
+    public void drawObstaculos(SpriteBatch batch) {
+        for (Obstacle obs : obstaculos) {
+            obs.draw(batch); // Dibuja cada obstaculo
         }
     }
     
-       private void handleObstacleCollisions(Nave nave) 
+       private void handleObstacleCollisions(Nave4 nave) 
     {
         for (int i = 0; i < obstaculos.size(); i++) 
         {
             if (nave.checkCollision(obstaculos.get(i))) 
             {
-                explosionSound.play(); // Reproduce sonido de explosión
+            	sonidoExplocion.play(); // Reproduce sonido de explosión
                 nave.setVidas(nave.getVidas()); // Reduce las vidas de la nave
                 obstaculos.remove(i); // Remueve el asteroide
                 i--; // Ajusta el índice
             }
         }
     } 
-   
+       
+    public boolean hayObstaculos() {
+    	if(obstaculos.isEmpty()) return false;
+    	return true;
+    }
+       
+    public ArrayList<Obstacle> getObstaculos(){
+    	return obstaculos;
+    }
+      
 }

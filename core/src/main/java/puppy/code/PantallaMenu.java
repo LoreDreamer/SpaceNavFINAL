@@ -34,7 +34,7 @@ public class PantallaMenu implements Screen { // Implementa la interfaz Screen
         // Detecta si el usuario toca la pantalla o presiona una tecla
         if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
             // Crea una nueva pantalla de juego
-            Screen ss = new PantallaJuego(game, 1, 3, 0, 1, 1, 6);
+            Screen ss = new PantallaJuego(game, 1, 3, 0, 1, 1, 6); // 7 
             ss.resize(1200, 800); // Ajusta el tamaño de la nueva pantalla
             game.setScreen(ss); // Cambia a la nueva pantalla
             dispose(); // Libera los recursos de la pantalla actual

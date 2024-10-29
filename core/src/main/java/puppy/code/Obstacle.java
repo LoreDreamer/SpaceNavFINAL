@@ -17,7 +17,8 @@ public abstract class Obstacle implements Movement {
     private Sprite spr;     // Sprite que representa visualmente al Obstacle
 
     // Constructor de Obstacle: inicializa posición, tamaño, velocidad y textura (sprite)
-    public Obstacle(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
+    public Obstacle(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) 
+    {
         spr = new Sprite(tx); // Crea un nuevo sprite utilizando la textura proporcionada
         this.x = x;           // Asigna el valor de x a la posición inicial en el eje x
 

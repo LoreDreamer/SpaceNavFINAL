@@ -67,18 +67,27 @@ public class Ball2 extends Obstacle implements Movement {
         setX(getX() + getXSpeed());
         setY(getY() + getYSpeed());
 
-        // Verifica si Ball2 ha tocado los bordes de la pantalla
-        // Si Ball2 se sale del borde izquierdo o derecho, invierte la dirección en x
-        if (x + xSpeed < 0 || x + xSpeed + spr.getWidth() > Gdx.graphics.getWidth()) {
+        // Rebotar cuando el borde del sprite toca el borde de la pantalla
+        if (x < 0) {
+            setX(0);
+            setXSpeed(getXSpeed() * -1);
+        } else if (x + spr.getWidth() > Gdx.graphics.getWidth()) {
+            setX(Gdx.graphics.getWidth() - (int) spr.getWidth());
             setXSpeed(getXSpeed() * -1);
         }
-        // Si Ball2 se sale del borde superior o inferior, invierte la dirección en y
-        if (y + ySpeed < 0 || y + ySpeed + spr.getHeight() > Gdx.graphics.getHeight()) {
+
+        if (y < 0) {
+            setY(0);
+            setYSpeed(getYSpeed() * -1);
+        } else if (y + spr.getHeight() > Gdx.graphics.getHeight()) {
+            setY(Gdx.graphics.getHeight() - (int) spr.getHeight());
             setYSpeed(getYSpeed() * -1);
         }
+
         // Actualiza la posición del sprite en pantalla después de cada movimiento
         spr.setPosition(x, y);
     }
+
 
     // Método getArea(): devuelve el área de colisión (bounding rectangle) de Ball2
     @Override

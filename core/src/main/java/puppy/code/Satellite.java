@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import java.util.Random;
 
-public class Satellite extends Obstacle implements Movement {
-
+public class Satellite extends Obstacle implements Movement 
+{
+	private Sprite spr;  
     private float scale; // Tamaño del satélite
     private int bulletHitCount; // Contador de impactos de bala
-    private static final int TARGET_SIZE_PX = 38; // Tamaño deseado en píxeles (1 cm)
+    private static final int TARGET_SIZE_PX = 40; // Tamaño deseado en píxeles (1 cm)
 
     // Constructor de la clase Satellite
     public Satellite(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {

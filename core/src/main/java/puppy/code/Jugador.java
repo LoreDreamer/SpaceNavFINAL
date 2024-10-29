@@ -1,68 +1,48 @@
 package puppy.code;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Jugador 
 {
-	private Nave4 nave;
-	private Bullet balas;
+	private SpriteBatch batch; 
+	private Nave4 nave; //objeto nave
+	private ArrayList<Bullet> balas; // Lista de balas 
 	
-	public Jugador(Nave4 nave)
+	public Jugador(SpriteBatch batch, int vidas)
 	{
-		
+		this.batch = batch;
+		balas = new ArrayList<Bullet>(); 
 	}
 	
-/*	
     // Método para crear la nave del jugador
-    private void createNave(int vidas) {
+    public void createNave(int vidas) //se crea la nave
+    {
         nave = new Nave4(Gdx.graphics.getWidth() / 2 - 50, 30,
                 new Texture(Gdx.files.internal("MainShip3.png")),
                 Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")),
                 new Texture(Gdx.files.internal("Rocket2.png")),
                 Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3")));
-        nave.setVidas(vidas); // Establece las vidas de la nave
-    }
-    
-	// Método para verificar las colisiones de las balas con asteroides y satélites
-    private void checkBulletCollisions(Bullet b, int bulletIndex) {
-        // Verifica colisiones con asteroides
-        for (int j = 0; j < obstaculos.size(); j++)  //recorro el array
-        {
-        	Obstacle obs = obstaculos.get(j);
-            if (b.checkCollision(obs)) 
-            {
-                explosionSound.play(); // Reproduce sonido de explosión
-                if(obs.hitByBullet())
-                {
-                	score += 10; // Incrementa la puntuación
-                    obstaculos.remove(j); // Remueve el asteroide
-                }
-                break; // Sale del bucle tras una colisión
-            }
-        }
-    }
-    
- // Método para manejar las colisiones de las balas
-    private void handleCollisions() {
-        for (int i = 0; i < balas.size(); i++) {
-            Bullet b = balas.get(i);
-            b.update(); // Actualiza la posición de la bala
-            checkBulletCollisions(b, i); // Verifica colisiones de la bala
-            removeDestroyedBullet(i); // Remueve balas destruidas
-        }
+        nave.setVidas(vidas); // Establece las vidas de la nave   
     }
     
 
     // Método para remover balas destruidas
-    private void removeDestroyedBullet(int bulletIndex) {
+    public void removeDestroyedBullet(int bulletIndex) {
         if (balas.get(bulletIndex).isDestroyed()) {
             balas.remove(bulletIndex); // Remueve la bala de la lista
         }
     }
 
     // Método para dibujar las balas en pantalla
-    private void drawBullets() {
+    public void drawBullets(SpriteBatch batch) 
+    {
         for (Bullet b : balas) {
             b.draw(batch); // Dibuja cada bala
         }
@@ -70,7 +50,47 @@ public class Jugador
     
     public boolean agregarBala(Bullet bb) {
         return balas.add(bb);
+        
+    }
+
+    
+    public Nave4 getNave() {
+    	return nave;
     }
     
-    */
+    public int vidasNave() {
+    	return nave.getVidas();
+    }
+    
+    public boolean naveDestruida()
+    {
+    	return nave.estaDestruido();
+    }
+    
+    public boolean naveHerida() {
+    	return nave.estaHerido();
+    }
+    
+    public ArrayList<Bullet> getBalas() {
+    	return balas;
+    }
+    
+    public void setBalas( ArrayList<Bullet> balas) {
+    	this.balas = balas;
+    	return;
+    }
+    
+    public void drawNave(SpriteBatch batch, PantallaJuego juego)
+    {
+    	nave.draw(batch, juego);
+    }
+    
+    public void disparo(SpriteBatch batch) 
+    {
+    	if(nave.disparo(batch) != null) 
+    	{
+    		agregarBala(nave.disparo(batch));
+    	}
+    }
+
 }

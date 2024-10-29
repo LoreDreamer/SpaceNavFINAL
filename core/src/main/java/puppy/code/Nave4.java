@@ -1,5 +1,7 @@
 package puppy.code;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
@@ -23,6 +25,7 @@ public class Nave4 {
     private boolean herido = false;
     private int tiempoHeridoMax=50;
     private int tiempoHerido;
+
     
     public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
     	sonidoHerido = soundChoque;
@@ -75,12 +78,19 @@ public class Nave4 {
  		   if (tiempoHerido<=0) herido = false;
  		 }
         // disparo
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {         
+        
+        
+      
+    }
+    
+    public Bullet disparo(SpriteBatch batch) {
+    	if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) 
+        {         
           Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight()-5,0,3,txBala);
-	      juego.agregarBala(bala);
-	      soundBala.play();
+	      soundBala.play(); 
+	      return bala;
         }
-       
+    	return null;
     }
       
     public boolean checkCollision(Obstacle b) {
