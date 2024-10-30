@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.audio.Sound;
 
 
 public class Obstacles {
@@ -82,10 +83,6 @@ public class Obstacles {
     	if(obstaculos.isEmpty()) return false;
     	return true;
     }
-       
-    public ArrayList<Obstacle> getObstaculos(){
-    	return obstaculos;
-    }
     
     public void increaseDifficulty() {
     	 	
@@ -112,6 +109,67 @@ public class Obstacles {
 
     	this.cantAsteroides += 2;
     
+    }
+    
+    public void handleCollisions(Player jugador, Sound sonidoExplocion) {
+    	
+    	
+    	for (int i = 0; i < obstaculos.size(); i++) 
+        {
+            if (jugador.getNave().checkCollision(obstaculos.get(i))) 
+            {
+            	sonidoExplocion.play(); // Reproduce sonido de explosión
+            	jugador.getNave().setVidas(jugador.getNave().getVidas()); // Reduce las vidas de la nave
+                obstaculos.remove(i); // Remueve el asteroide
+                i--; // Ajusta el índice
+            }
+        }
+    	
+    	for (int i = 0; i < obstaculos.size(); i++) {
+    		Obstacle ball1 = obstaculos.get(i);
+    		for (int j = 0; j < obstaculos.size(); j++) {
+    			Obstacle ball2 = obstaculos.get(j);
+    			if (i < j) {
+    				ball1.checkCollision(ball2);
+    			}
+    		}
+    	}
+    	
+    }
+    	
+    public int handleBulletCollisions(Player jugador, Sound sonidoExplocion) {
+    	
+    	int score = 0;
+        for (int i = 0; i < jugador.getBalas().size(); i++) 
+        {
+            Bullet b = jugador.getBalas().get(i);
+            b.update(); // Actualiza la posición de la bala
+            score = checkBullet(b, i, sonidoExplocion); // Verifica colisiones de la bala
+            jugador.removeDestroyedBullet(i); // Remueve balas destruidas
+        }
+        return score;
+        
+    }
+    
+    private int checkBullet(Bullet b, int bulletIndex, Sound sonidoExplocion) {
+    	
+    	int score = 0;
+        for (int j = 0; j < obstaculos.size(); j++)  //recorro el array
+        {
+        	Obstacle obs = obstaculos.get(j);
+            if (b.checkCollision(obs)) 
+            {
+            	sonidoExplocion.play(); // Reproduce sonido de explosión
+                if(obs.hitByBullet())
+                {
+                	score += 10; // Incrementa la puntuación
+                    obstaculos.remove(j); // Remueve el asteroide
+                }
+                break; // Sale del bucle tras una colisión
+            }
+        }
+        return score;
+        
     }
       
 }

@@ -45,30 +45,26 @@ public class Satellite extends Obstacle implements Movement
     // Método de movimiento que implementa el comportamiento de la interfaz Movement
     @Override
     public void move() {
-        Random random = new Random();
-        int randomNumber = random.nextInt(100); // Genera un número aleatorio entre 0 y 99
-        
-        int x = getX();
-        int y = getY();
-        Sprite spr = getSpr();
+        // Update position based on speed
+        setX(getX() + getXSpeed());
+        setY(getY() + getYSpeed());
 
-        // Determinar si el número es par o impar
-        if (randomNumber % 2 == 0) { // Par: mover de arriba a abajo
-            setY(y + getYSpeed() - 1); // Mover verticalmente
-        } else { // Impar: mover de lado a lado
-            setX(x + getXSpeed() - 1); // Mover horizontalmente
+        // Screen dimensions
+        int screenWidth = Gdx.graphics.getWidth();
+        int screenHeight = Gdx.graphics.getHeight();
+
+        // Check if the satellite is out of bounds and reflect its movement if necessary
+        if (getX() < 0 || getX() + getSpr().getWidth() > screenWidth) {
+            setXSpeed(-getXSpeed()); // Reverse direction on X-axis
+        }
+        if (getY() < 0 || getY() + getSpr().getHeight() > screenHeight) {
+            setYSpeed(-getYSpeed()); // Reverse direction on Y-axis
         }
 
-        // Rebotar en los bordes de la pantalla
-        if (x + getXSpeed() < 0 || x + getXSpeed() + spr.getWidth() > Gdx.graphics.getWidth()) {
-            setXSpeed(getXSpeed() * -1);
-        }
-        if (y + getYSpeed() < 0 || y + getYSpeed() + spr.getHeight() > Gdx.graphics.getHeight()) {
-            setYSpeed(getYSpeed() * -1);
-        }
-
-        spr.setPosition(x, y);
+        // Update the position of the sprite
+        getSpr().setPosition(getX(), getY());
     }
+
 
     // Método para obtener el área del satélite
     @Override
@@ -86,23 +82,31 @@ public class Satellite extends Obstacle implements Movement
 
     // Método para verificar la colisión con otro obstáculo
     @Override
-    public void checkCollision(Obstacle s2) {
-        Sprite spr = getSpr();
+    public void checkCollision(Obstacle b2) {
+        if (this.getSpr().getBoundingRectangle().overlaps(b2.getSpr().getBoundingRectangle())) {
+            // Satellite specific collision response: reduce speed significantly upon collision
+            int tempXSpeed = this.getXSpeed();
+            int tempYSpeed = this.getYSpeed();
 
-        if (spr.getBoundingRectangle().overlaps(s2.getSpr().getBoundingRectangle())) {
-            // Rebote
-            if (getXSpeed() == 0) setXSpeed(getXSpeed() + s2.getXSpeed() / 2);
-            if (s2.getXSpeed() == 0) s2.setXSpeed(s2.getXSpeed() + getXSpeed() / 2);
+            // Set new speeds with more reduction for satellites, ensuring they don't go to zero
+            int newXSpeed = Math.max(1, Math.abs(b2.getXSpeed() / 3)) * (b2.getXSpeed() < 0 ? -1 : 1);
+            int newYSpeed = Math.max(1, Math.abs(b2.getYSpeed() / 3)) * (b2.getYSpeed() < 0 ? -1 : 1);
 
-            setXSpeed(-getXSpeed());
-            s2.setXSpeed(-s2.getXSpeed());
+            this.setXSpeed(newXSpeed);
+            this.setYSpeed(newYSpeed);
 
-            if (getYSpeed() == 0) setYSpeed(getYSpeed() + s2.getYSpeed() / 2);
-            if (s2.getYSpeed() == 0) s2.setYSpeed(s2.getYSpeed() + getYSpeed() / 2);
-            setYSpeed(-getYSpeed());
-            s2.setYSpeed(-s2.getYSpeed());
+            // Ensure the other obstacle's speed doesn't become zero
+            b2.setXSpeed(Math.max(1, Math.abs(tempXSpeed / 3)) * (tempXSpeed < 0 ? -1 : 1));
+            b2.setYSpeed(Math.max(1, Math.abs(tempYSpeed / 3)) * (tempYSpeed < 0 ? -1 : 1));
+
+            // Slightly adjust positions to avoid overlap
+            this.setX((int) (this.getX() + this.getXSpeed() * 0.05f));
+            this.setY((int) (this.getY() + this.getYSpeed() * 0.05f));
+            b2.setX((int) (b2.getX() + b2.getXSpeed() * 0.05f));
+            b2.setY((int) (b2.getY() + b2.getYSpeed() * 0.05f));
         }
     }
+
     
     // Método para registrar un impacto de bala
     @Override

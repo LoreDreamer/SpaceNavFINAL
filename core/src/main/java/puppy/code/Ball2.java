@@ -104,25 +104,32 @@ public class Ball2 extends Obstacle implements Movement {
     // Método checkCollision(): verifica la colisión con otro Obstacle y ajusta la velocidad si colisiona
     @Override
     public void checkCollision(Obstacle b2) {
-        // Verifica si el área de colisión de Ball2 se superpone con el área de colisión de b2
-        if (spr.getBoundingRectangle().overlaps(b2.getSpr().getBoundingRectangle())) { // Rebote
-            // Si Ball2 o el otro Obstacle (b2) no tienen velocidad en x, establece una velocidad inicial
-            if (getXSpeed() == 0) setXSpeed(getXSpeed() + b2.getXSpeed() / 2);
-            if (b2.getXSpeed() == 0) b2.setXSpeed(b2.getXSpeed() + getXSpeed() / 2);
+        if (this.getSpr().getBoundingRectangle().overlaps(b2.getSpr().getBoundingRectangle())) {
+            // Meteorite specific collision response: reduce speed upon collision
+            int tempXSpeed = this.getXSpeed();
+            int tempYSpeed = this.getYSpeed();
 
-            // Invertir la velocidad en x para ambos objetos
-            setXSpeed(-getXSpeed());
-            b2.setXSpeed(-b2.getXSpeed());
+            // Set new speeds ensuring they are not zero
+            int newXSpeed = Math.max(2, Math.abs(b2.getXSpeed() / 2)) * (b2.getXSpeed() < 0 ? -1 : 1);
+            int newYSpeed = Math.max(2, Math.abs(b2.getYSpeed() / 2)) * (b2.getYSpeed() < 0 ? -1 : 1);
 
-            // Si Ball2 o el otro Obstacle (b2) no tienen velocidad en y, establece una velocidad inicial
-            if (getYSpeed() == 0) setYSpeed(getYSpeed() + b2.getYSpeed() / 2);
-            if (b2.getYSpeed() == 0) b2.setYSpeed(b2.getYSpeed() + getYSpeed() / 2);
+            this.setXSpeed(newXSpeed);
+            this.setYSpeed(newYSpeed);
 
-            // Invertir la velocidad en y para ambos objetos
-            setYSpeed(-getYSpeed());
-            b2.setYSpeed(-b2.getYSpeed());
+            // Ensure the other obstacle's speed doesn't become zero
+            b2.setXSpeed(Math.max(2, Math.abs(tempXSpeed / 2)) * (tempXSpeed < 0 ? -1 : 1));
+            b2.setYSpeed(Math.max(2, Math.abs(tempYSpeed / 2)) * (tempYSpeed < 0 ? -1 : 1));
+
+            // Slightly adjust positions to separate the obstacles
+            this.setX((int) (this.getX() + this.getXSpeed() * 0.05f));
+            this.setY((int) (this.getY() + this.getYSpeed() * 0.05f));
+            b2.setX((int) (b2.getX() + b2.getXSpeed() * 0.05f));
+            b2.setY((int) (b2.getY() + b2.getYSpeed() * 0.05f));
         }
     }
+
+
+
     
     @Override
     public boolean hitByBullet() {
