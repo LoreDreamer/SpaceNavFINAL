@@ -144,7 +144,7 @@ public class Obstacles {
         {
             Bullet b = jugador.getBalas().get(i);
             b.update(); // Actualiza la posición de la bala
-            score = checkBullet(b, i, sonidoExplocion); // Verifica colisiones de la bala
+            score += checkBullet(b, i, sonidoExplocion); // Verifica colisiones de la bala
             jugador.removeDestroyedBullet(i); // Remueve balas destruidas
         }
         return score;

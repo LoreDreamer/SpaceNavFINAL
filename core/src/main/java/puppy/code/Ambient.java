@@ -57,7 +57,7 @@ public class Ambient {
 		obstaculos.increaseDifficulty();
 
 		// Crear una nueva instancia de PantallaJuego con los valores actualizados
-		PantallaJuego nuevaPantalla = new PantallaJuego(game, ronda, vidas, score);
+		PantallaJuego nuevaPantalla = new PantallaJuego(game, ronda, vidasNave(), score);
 
 		// Cambia a la nueva pantalla
 		game.setScreen(nuevaPantalla);
