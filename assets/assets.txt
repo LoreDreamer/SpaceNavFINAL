@@ -1,4 +1,3 @@
-.project
 aGreyLarge.png
 aGreyMedium4.png
 aGreySmall.png
