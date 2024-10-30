@@ -10,9 +10,10 @@ import com.badlogic.gdx.audio.Sound;
 
 public class Obstacles {
 	
-	private int velXAsteroides; // Velocidad en el eje X de los asteroides
-    private int velYAsteroides; // Velocidad en el eje Y de los asteroides
-    private int cantSatelites; // Cantidad de asteroides en juego
+	private int velXAsteroides;
+    private int velYAsteroides;
+    private int cantSatelites;
+    
     private int velXSatelites;
     private int velYSatelites;
     private int cantAsteroides; 
@@ -24,11 +25,11 @@ public class Obstacles {
 		this.velXAsteroides = velXAsteroides;
 		this.velYAsteroides = velYAsteroides;
 		
-		this.velXSatelites = velXAsteroides/3;
-		this.velYSatelites = velYAsteroides/3;
+		this.velXSatelites = velXAsteroides / 3;
+		this.velYSatelites = velYAsteroides / 3;
 		
 		this.cantAsteroides = cantAsteroides;
-		this.cantSatelites = cantAsteroides/3;
+		this.cantSatelites = cantAsteroides / 3;
 		
 		obstaculos = new ArrayList<>(); // Lista de obstaculos
 		
@@ -80,7 +81,7 @@ public class Obstacles {
     }
        
     public boolean hayObstaculos() {
-    	if(obstaculos.isEmpty()) return false;
+    	if (obstaculos.isEmpty()) return false;
     	return true;
     }
     
@@ -88,15 +89,16 @@ public class Obstacles {
     	 	
         increaseVelocity();
         increaseQuantity();
+        
     }
     
     private void increaseVelocity() {
     	
-    	this.velXAsteroides += 0.5;
-    	this.velYAsteroides += 0.5;
+    	this.velXAsteroides += 1;
+    	this.velYAsteroides += 1;
     	
-    	this.velXAsteroides += 0.3;
-    	this.velYSatelites += 0.3;
+    	this.velXAsteroides += 1;
+    	this.velYSatelites += 1;
     }
     
     private void increaseQuantity() {
@@ -170,6 +172,5 @@ public class Obstacles {
         }
         return score;
         
-    }
-      
+    }  
 }

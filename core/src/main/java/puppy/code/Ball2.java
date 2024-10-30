@@ -104,23 +104,21 @@ public class Ball2 extends Obstacle implements Movement {
     // Método checkCollision(): verifica la colisión con otro Obstacle y ajusta la velocidad si colisiona
     @Override
     public void checkCollision(Obstacle b2) {
+    	
         if (this.getSpr().getBoundingRectangle().overlaps(b2.getSpr().getBoundingRectangle())) {
-            // Meteorite specific collision response: reduce speed upon collision
+
             int tempXSpeed = this.getXSpeed();
             int tempYSpeed = this.getYSpeed();
 
-            // Set new speeds ensuring they are not zero
             int newXSpeed = Math.max(2, Math.abs(b2.getXSpeed() / 2)) * (b2.getXSpeed() < 0 ? -1 : 1);
             int newYSpeed = Math.max(2, Math.abs(b2.getYSpeed() / 2)) * (b2.getYSpeed() < 0 ? -1 : 1);
 
             this.setXSpeed(newXSpeed);
             this.setYSpeed(newYSpeed);
 
-            // Ensure the other obstacle's speed doesn't become zero
             b2.setXSpeed(Math.max(2, Math.abs(tempXSpeed / 2)) * (tempXSpeed < 0 ? -1 : 1));
             b2.setYSpeed(Math.max(2, Math.abs(tempYSpeed / 2)) * (tempYSpeed < 0 ? -1 : 1));
 
-            // Slightly adjust positions to separate the obstacles
             this.setX((int) (this.getX() + this.getXSpeed() * 0.05f));
             this.setY((int) (this.getY() + this.getYSpeed() * 0.05f));
             b2.setX((int) (b2.getX() + b2.getXSpeed() * 0.05f));
@@ -128,9 +126,6 @@ public class Ball2 extends Obstacle implements Movement {
         }
     }
 
-
-
-    
     @Override
     public boolean hitByBullet() {
     	return true;

@@ -2,10 +2,8 @@ package puppy.code;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import java.util.Random;
 
 public class Satellite extends Obstacle implements Movement 
 { 
@@ -15,6 +13,7 @@ public class Satellite extends Obstacle implements Movement
 
     // Constructor de la clase Satellite
     public Satellite(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
+    	
         super(x, y, size, xSpeed, ySpeed, tx);
         
         // Escala para ajustar al tamaño deseado
@@ -29,9 +28,11 @@ public class Satellite extends Obstacle implements Movement
     }
 
     public void setScale(float scale) {
+    	
         this.scale = scale;
         // Aplica el cambio de escala al sprite
         getSpr().setSize(TARGET_SIZE_PX * scale, TARGET_SIZE_PX * scale);
+        
     }
 
     public int getBulletHitCount() {
@@ -53,12 +54,11 @@ public class Satellite extends Obstacle implements Movement
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
-        // Check if the satellite is out of bounds and reflect its movement if necessary
         if (getX() < 0 || getX() + getSpr().getWidth() > screenWidth) {
-            setXSpeed(-getXSpeed()); // Reverse direction on X-axis
+            setXSpeed(-getXSpeed());
         }
         if (getY() < 0 || getY() + getSpr().getHeight() > screenHeight) {
-            setYSpeed(-getYSpeed()); // Reverse direction on Y-axis
+            setYSpeed(-getYSpeed());
         }
 
         // Update the position of the sprite
@@ -75,31 +75,31 @@ public class Satellite extends Obstacle implements Movement
     // Método para dibujar el satélite
     @Override
     public void draw(SpriteBatch batch) {
+    	
         getSpr().setSize(TARGET_SIZE_PX * scale, TARGET_SIZE_PX * scale); 
-        getSpr().setPosition(getX(), getY()); // Establece la posición donde se debe dibujar
-        getSpr().draw(batch); // Dibuja el sprite
+        getSpr().setPosition(getX(), getY());
+        getSpr().draw(batch);
+        
     }
 
     // Método para verificar la colisión con otro obstáculo
     @Override
     public void checkCollision(Obstacle b2) {
+    	
         if (this.getSpr().getBoundingRectangle().overlaps(b2.getSpr().getBoundingRectangle())) {
-            // Satellite specific collision response: reduce speed significantly upon collision
+
             int tempXSpeed = this.getXSpeed();
             int tempYSpeed = this.getYSpeed();
 
-            // Set new speeds with more reduction for satellites, ensuring they don't go to zero
-            int newXSpeed = Math.max(1, Math.abs(b2.getXSpeed() / 3)) * (b2.getXSpeed() < 0 ? -1 : 1);
-            int newYSpeed = Math.max(1, Math.abs(b2.getYSpeed() / 3)) * (b2.getYSpeed() < 0 ? -1 : 1);
+            int newXSpeed = Math.max(1, Math.abs(b2.getXSpeed() / 4)) * (b2.getXSpeed() < 0 ? -1 : 1);
+            int newYSpeed = Math.max(1, Math.abs(b2.getYSpeed() / 4)) * (b2.getYSpeed() < 0 ? -1 : 1);
 
             this.setXSpeed(newXSpeed);
             this.setYSpeed(newYSpeed);
 
-            // Ensure the other obstacle's speed doesn't become zero
-            b2.setXSpeed(Math.max(1, Math.abs(tempXSpeed / 3)) * (tempXSpeed < 0 ? -1 : 1));
-            b2.setYSpeed(Math.max(1, Math.abs(tempYSpeed / 3)) * (tempYSpeed < 0 ? -1 : 1));
+            b2.setXSpeed(Math.max(1, Math.abs(tempXSpeed / 4)) * (tempXSpeed < 0 ? -1 : 1));
+            b2.setYSpeed(Math.max(1, Math.abs(tempYSpeed / 4)) * (tempYSpeed < 0 ? -1 : 1));
 
-            // Slightly adjust positions to avoid overlap
             this.setX((int) (this.getX() + this.getXSpeed() * 0.05f));
             this.setY((int) (this.getY() + this.getYSpeed() * 0.05f));
             b2.setX((int) (b2.getX() + b2.getXSpeed() * 0.05f));

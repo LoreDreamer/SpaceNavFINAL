@@ -21,6 +21,7 @@ public class Ambient {
 	}
 
 	public void inicializar() {
+		
 		obstaculos.createObstacles();
 		jugador.createNave(vidas);
 	}
@@ -54,13 +55,15 @@ public class Ambient {
 		gameMusic.stop(); // Detener la música
 		ronda++; // Incrementa la ronda
 
-		obstaculos.increaseDifficulty();
-
 		// Crear una nueva instancia de PantallaJuego con los valores actualizados
 		PantallaJuego nuevaPantalla = new PantallaJuego(game, ronda, vidasNave(), score);
-
+		
 		// Cambia a la nueva pantalla
 		game.setScreen(nuevaPantalla);
+	}
+	
+	public void ambienteModificar() {
+		obstaculos.increaseDifficulty();
 	}
 
 	public int vidasNave() {
@@ -89,6 +92,10 @@ public class Ambient {
 
 	public void disparo(SpriteBatch batch) {
 		jugador.disparo(batch);
+	}
+	
+	public Obstacles getObstacles() {
+		return obstaculos;
 	}
 
 }

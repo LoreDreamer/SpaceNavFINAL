@@ -19,13 +19,14 @@ public class Player
 	}
 	
     // Método para crear la nave del jugador
-    public void createNave(int vidas) //se crea la nave
+    public void createNave(int vidas)
     {
         nave = new Nave4(Gdx.graphics.getWidth() / 2 - 50, 30,
                 new Texture(Gdx.files.internal("MainShip3.png")),
                 Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")),
                 new Texture(Gdx.files.internal("Rocket2.png")),
                 Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3")));
+        
         nave.setVidas(vidas); // Establece las vidas de la nave   
     }
     
@@ -50,7 +51,6 @@ public class Player
         
     }
 
-    
     public Nave4 getNave() {
     	return nave;
     }
@@ -82,12 +82,10 @@ public class Player
     	nave.draw(batch, juego);
     }
     
-    public void disparo(SpriteBatch batch) 
-    {
-    	if(nave.disparo(batch) != null) 
-    	{
+    public void disparo(SpriteBatch batch) {
+    	
+    	if (nave.disparo(batch) != null) {
     		agregarBala(nave.disparo(batch));
     	}
     }
-
 }
