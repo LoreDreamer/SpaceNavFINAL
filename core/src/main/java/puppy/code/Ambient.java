@@ -24,6 +24,7 @@ public class Ambient {
 		
 		obstaculos.createObstacles();
 		jugador.createNave(vidas);
+		ItemFactory.inicializarItems();
 	}
 
 	public void crearObstaculos() {
@@ -37,6 +38,10 @@ public class Ambient {
 	public void drawObstaculos(SpriteBatch batch) {
 		obstaculos.drawObstaculos(batch);
 	}
+	
+	public void drawItems(SpriteBatch batch) {
+		ItemFactory.drawItems(batch);
+	}
 
 	public boolean hayObstaculos() {
 		return obstaculos.hayObstaculos();
@@ -44,6 +49,10 @@ public class Ambient {
 
 	public void handleObstacleCollisions() {
 		obstaculos.handleCollisions(jugador, sonidoExplocion);
+	}
+	
+	public int handleItemCollisions() {
+		return ItemFactory.handleCollisions(jugador);
 	}
 
 	// Método para manejar las colisiones de las balas

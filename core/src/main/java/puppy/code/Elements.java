@@ -6,32 +6,89 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public abstract class Obstacle implements Movement { // Clase abstracta que implementa la interfaz Movement
-   
-    private int x;
-    private int y;
-    private int xSpeed;
-    private int ySpeed;
-    private Sprite spr;
+public abstract class Elements {
+	
+	private int x;          
+    private int y;          
+    private int xSpeed;     
+    private int ySpeed;     
+    private Sprite spr;   
 
-    public Obstacle(int x, int y, int size, int xSpeed, int ySpeed, Texture tx)  { // Constructor de Obstacle: inicializa posición, tamaño, velocidad y textura (sprite)
+    private Elements(ElemBuilder builder){
     	
-        spr = new Sprite(tx);
-        this.x = x;
+    	this.spr = builder.spr;
+    	this.x = builder.x;
 
         // Validar que el borde de la esfera no quede fuera de la pantalla
-        if (x - size < 0) this.x = x + size;
-        if (x + size > Gdx.graphics.getWidth()) this.x = x - size;
+        if (x - builder.size < 0) this.x = x + builder.size;
+        if (x + builder.size > Gdx.graphics.getWidth()) this.x = x - builder.size;
         
-        this.y = y;
+        this.y = builder.y;
         
         // Validar que el borde de la esfera no quede fuera de la pantalla
-        if (y - size < 0) this.y = y + size;
-        if (y + size > Gdx.graphics.getHeight()) this.y = y - size;
-
+        if (y - builder.size < 0) this.y = y + builder.size;
+        if (y + builder.size > Gdx.graphics.getHeight()) this.y = y - builder.size;
+        	
         spr.setPosition(x, y);
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
+        this.xSpeed = builder.xSpeed;
+        this.ySpeed = builder.ySpeed;
+    }
+    
+    //Clase interna builder
+    
+    public static class ElemBuilder
+    {
+    	//Instancias obligatorias
+    	private int x;
+        private int y;
+        private Sprite spr;
+        private int size;
+        
+        //Instancias opcionales
+        private int xSpeed;
+        private int ySpeed;
+    	private int score;
+    	private int effect;
+    	private float time;
+    	private Texture tx;
+        
+        public ElemBuilder(int x, int y, Sprite spr)
+        {
+        	this.x = x;
+        	this.y = y;
+        	this.spr = spr;
+        }
+        
+        public ElemBuilder addSize(int size)
+        {
+        	this.size = size;
+        	
+        	return this;
+        }
+        
+        public ElemBuilder addSpeed(int xSpeed, int ySpeed)
+        {
+        	this.xSpeed = xSpeed;
+        	this.ySpeed = ySpeed;
+        	
+        	return this;
+        }
+        
+        public ElemBuilder addEffect(int score, int effect, int time, Texture tx)
+        {
+        	this.score = score;
+        	this.effect = effect;
+        	this.time = time;
+        	this.tx = tx;
+        	
+        	return this;
+        }
+        
+        public Elements build()
+        {
+        	return new Elements(this);
+        }
+        
     }
 
     public void move() { // Método implementado de la interfaz Movement para mover el Obstacle

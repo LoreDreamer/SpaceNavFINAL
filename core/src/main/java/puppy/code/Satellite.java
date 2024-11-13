@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Satellite extends Obstacle implements Movement 
+public class Satellite extends Obstacle 
 { 
     private float scale; // Tamaño del satélite
     private int bulletHitCount; // Contador de impactos de bala

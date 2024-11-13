@@ -74,6 +74,17 @@ public class PantallaJuego implements Screen
         	modificarAmbiente();
         }
     }
+    
+    
+    //
+    
+    public void handleItemCollisions()
+    {
+    	this.score += ambiente.handleItemCollisions();
+    }
+    
+    //
+    
 
     @Override
     public void pause() {
@@ -192,7 +203,8 @@ public class PantallaJuego implements Screen
         
         ambiente.drawBullets(batch);  // Llama a drawBullets aquí       
         ambiente.drawObstaculos(batch); //reemplazar por el 
-
+        ambiente.drawItems(batch);
+        
         checkGameOver(); // Verifica si el juego ha terminado 
         batch.end(); // Termina el batch de dibujo
         

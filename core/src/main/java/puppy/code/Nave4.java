@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class Nave4 {
 	
+	//Instancia de nave unica
+	private static Nave4 navePlayer;
+	
 	private boolean destruida = false;
     private int vidas = 3;
     private float xVel = 0;
@@ -20,12 +23,18 @@ public class Nave4 {
     private Sound soundBala;
     private Texture txBala;
     
+    private boolean inmune = false;
+    private int tiempoInmuneMax = 50;
+    private int tiempoInmune;
+    private boolean paralizado = false;
+    private int tiempoParalizadoMax = 50;
+    private int tiempoParalizado;
     private boolean herido = false;
     private int tiempoHeridoMax = 50;
     private int tiempoHerido;
 
     
-    public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
+    private Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
     	
     	sonidoHerido = soundChoque;
     	this.soundBala = soundBala;
@@ -37,12 +46,21 @@ public class Nave4 {
 
     }
     
+    // Metodo para obtener el objeto unico nave
+    public static Nave4 getNavePlayer(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala)
+    {
+    	if (navePlayer == null)
+    		navePlayer = new Nave4(x, y, tx, soundChoque, txBala, soundBala);
+    	
+    	return navePlayer;
+    }
+    
     public void draw(SpriteBatch batch, PantallaJuego juego){
     	
         float x =  spr.getX();
         float y =  spr.getY();
         
-        if (!herido) { // que se mueva con teclado
+        if (!herido && !paralizado) { // que se mueva con teclado
         	
 	        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) xVel--;
 	        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) xVel++;
@@ -84,7 +102,7 @@ public class Nave4 {
       
     public boolean checkCollision(Obstacle b) {
     	
-        if (!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
+        if (!inmune && !herido && b.getArea().overlaps(spr.getBoundingRectangle())){
         	
         	// rebote
             if (xVel ==0) xVel += b.getXSpeed()/2;
@@ -113,12 +131,33 @@ public class Nave4 {
         return false;
     }
     
+public boolean checkCollision(Item i) {
+    	
+        if (!inmune && !herido && i.getArea().overlaps(spr.getBoundingRectangle())){
+        	i.updateEffect(navePlayer);
+            return true;
+        }
+        return false;
+    }
+    
     public boolean estaDestruido() {
        return !herido && destruida;
     }
     public boolean estaHerido() {
  	   return herido;
     }
+    public void setInmune(boolean estado) {
+    	inmune = estado;
+    }
+    public boolean esInmune() {
+  	   return inmune;
+     }
+    public void setParalizado(boolean estado) {
+    	paralizado = estado;
+    }
+    public boolean estaParalizado() {
+  	   return paralizado;
+     }
     
     public int getVidas() {return vidas;}
     public int getX() {return (int) spr.getX();}
