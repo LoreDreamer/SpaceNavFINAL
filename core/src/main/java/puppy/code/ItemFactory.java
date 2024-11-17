@@ -1,51 +1,43 @@
 package puppy.code;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class ItemFactory
 {
-	private static ArrayList<Item> listItems = new ArrayList<>();
+	private ArrayList<Item> listItems = new ArrayList<>();
 	
 	public static Item createItem(int id, int x, int y, int size)
 	{
-		int score;
-		Effect effect;
-		float time;
-		Texture tx;
+		Item item;
 		
 		switch(id)
 		{
 			case 0:
-				score = 500;
-				time = 3;
-				effect = new Inmune();
-				tx = new Texture(Gdx.files.internal("aGreyMedium4.png"));
 				
-				return new Star(x, y, size, score, effect, time, tx);
+				item = new Star(x, y, size, 200, new Inmune(3), new Texture(Gdx.files.internal("Star2.png")));
+				item.setEffect(new Inmune(3));
+				
+				return item;
 			case 1:
-				score = 10;
-				time = 2;
-				effect = new Paralizado();
-				tx = new Texture(Gdx.files.internal("aGreyMedium4.png"));
 				
-				return new BlackHole(x, y, size, score, effect, time, tx);
+				item = new BlackHole(x, y, size, 10, new Paralizado(2), new Texture(Gdx.files.internal("BlackHole.png")));
+				item.setEffect(new Paralizado(2));
+				
+				return item;
 			default:
-				score = 100;
-				time = 2;
-				effect = new Inmune();
-				tx = new Texture(Gdx.files.internal("aGreyMedium4.png"));
 				
-				return new Star(x, y, score, size, effect, time, tx);
+				item = new Star(x, y, size, 100, new Inmune(2), new Texture(Gdx.files.internal("Star2.png")));
+				item.setEffect(new Inmune(2));
+				
+				return item;
 		}
 	}
 	
-	public static void inicializarItems()
+	public void inicializarItems()
 	{
 		Random rdm = new Random();
 		Item mod;
@@ -60,13 +52,13 @@ public class ItemFactory
 		}
 	}
 	
-	public static void drawItems(SpriteBatch batch) {
+	public void drawItems(SpriteBatch batch) {
         for (Item mod : listItems) {
             mod.draw(batch);
         }
     }
 	
-	public static int handleCollisions(Player jugador) {
+	public int handleCollisions(Player jugador) {
     	
     	int score = 0;
 		
@@ -74,7 +66,7 @@ public class ItemFactory
         {
             if (jugador.getNave().checkCollision(listItems.get(i))) 
             {
-            	score = listItems.get(i).updateScore(score);
+            	score = 1 + listItems.get(i).updateScore(score);
             	listItems.get(i).updateEffect(jugador.getNave());
             	listItems.remove(i);
                 i--;

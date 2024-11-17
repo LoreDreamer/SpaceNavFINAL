@@ -13,10 +13,9 @@ public abstract class Item
 	private int size;
 	private int score;
 	private Effect effect;
-	private float time;
 	private Sprite spr;
 	
-	public Item(int x, int y, int size, int score, Effect effect, float time, Texture tx) {
+	/*public Item(int x, int y, int size, int score, Effect effect, Texture tx) {
 		this.x = x;
 		
 		if (x - size < 0) this.x = x + size;
@@ -30,9 +29,11 @@ public abstract class Item
 		this.size = size;
 		this.score = score;
 		this.effect = effect;
-		this.time = time;
 		this.spr = new Sprite(tx);
-	}
+		
+    	spr.setPosition(x, y);
+    	spr.setBounds(x, y, 45, 45);
+	}*/
 	
 	
 	public Rectangle getArea() {
@@ -43,11 +44,7 @@ public abstract class Item
         spr.draw(batch);
     }
     
-    public void serEffect(Effect effect)
-    {
-    	this.effect = effect;
-    }
-    
+    public abstract void setEffect(Effect effect);
 	public abstract int updateScore(int score);
 	public abstract void updateEffect(Nave4 nave);
 }

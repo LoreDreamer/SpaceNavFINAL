@@ -1,15 +1,18 @@
 aGreyLarge.png
 aGreyMedium4.png
 aGreySmall.png
-clipart2371132.png
+BlackHole.png
+desktop.ini
 explosion.ogg
-gal3.png
-gal5.png
-gal6.png
 gal7.png
 hurt.ogg
-MainShip3.png
+MainShip5.png
+MainShipBuffed3.png
+piano-loops.wav
 pop-sound.mp3
 Rocket2.png
 sat.png
+Satelite.png
+Satelite1.png
 Smile -  Butterfly.mp3
+Star2.png

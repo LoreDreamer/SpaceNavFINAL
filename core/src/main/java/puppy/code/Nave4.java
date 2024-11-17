@@ -22,23 +22,25 @@ public class Nave4 {
     private Sound sonidoHerido;
     private Sound soundBala;
     private Texture txBala;
+    private Texture tx; // textura base
+    private Texture txBuffed; // textura con modificador
     
     private boolean inmune = false;
-    private int tiempoInmuneMax = 50;
-    private int tiempoInmune;
+    private float tiempoInmune = 0;
     private boolean paralizado = false;
-    private int tiempoParalizadoMax = 50;
-    private int tiempoParalizado;
+    private float tiempoParalizado = 0;
     private boolean herido = false;
     private int tiempoHeridoMax = 50;
     private int tiempoHerido;
 
     
-    private Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
+    private Nave4(int x, int y, Texture tx, Texture txBuffed, Sound soundChoque, Texture txBala, Sound soundBala) {
     	
     	sonidoHerido = soundChoque;
     	this.soundBala = soundBala;
     	this.txBala = txBala;
+    	this.tx = tx;
+    	this.txBuffed = txBuffed;
     	
     	spr = new Sprite(tx);
     	spr.setPosition(x, y);
@@ -47,10 +49,10 @@ public class Nave4 {
     }
     
     // Metodo para obtener el objeto unico nave
-    public static Nave4 getNavePlayer(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala)
+    public static Nave4 getNavePlayer(int x, int y, Texture tx, Texture txBuffed, Sound soundChoque, Texture txBala, Sound soundBala)
     {
     	if (navePlayer == null)
-    		navePlayer = new Nave4(x, y, tx, soundChoque, txBala, soundBala);
+    		navePlayer = new Nave4(x, y, tx, txBuffed, soundChoque, txBala, soundBala);
     	
     	return navePlayer;
     }
@@ -59,6 +61,30 @@ public class Nave4 {
     	
         float x =  spr.getX();
         float y =  spr.getY();
+        
+        if (paralizado)
+        {
+        	tiempoParalizado -= Gdx.graphics.getDeltaTime();
+        	
+        	if (tiempoParalizado <= 0)
+        	{
+        		paralizado = false;
+        		tiempoParalizado = 0;
+        	}
+        }
+        
+        if (inmune)
+        {
+        	spr.setRegion(txBuffed);
+        	tiempoInmune -= Gdx.graphics.getDeltaTime();
+        	
+        	if (tiempoInmune <= 0)
+        	{
+        		inmune = false;
+        		tiempoInmune = 0;
+        		spr.setRegion(tx);
+        	}
+        }
         
         if (!herido && !paralizado) { // que se mueva con teclado
         	
@@ -134,7 +160,6 @@ public class Nave4 {
 public boolean checkCollision(Item i) {
     	
         if (!inmune && !herido && i.getArea().overlaps(spr.getBoundingRectangle())){
-        	i.updateEffect(navePlayer);
             return true;
         }
         return false;
@@ -159,8 +184,24 @@ public boolean checkCollision(Item i) {
   	   return paralizado;
      }
     
+    public void setTiempoInmune(float time)
+    {
+    	this.tiempoInmune = time;
+    }
+    
+    public void setTiempoParalizado(float time)
+    {
+    	this.tiempoParalizado = time;
+    }
+    
+    public void setPosition(int x, int y)
+    {
+    	spr.setPosition(x, y);
+    }
+    
     public int getVidas() {return vidas;}
     public int getX() {return (int) spr.getX();}
     public int getY() {return (int) spr.getY();}
 	public void setVidas(int vidas2) {vidas = vidas2;}
 }
+

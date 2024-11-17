@@ -33,7 +33,7 @@ public class PantallaJuego implements Screen
     private SpriteBatch spriteBatch;
     private Mesh mesh;
     private Texture fondo;
-    private Ambient ambiente;
+    private Ambient1 ambiente;
 
     public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score) {
     	
@@ -42,10 +42,13 @@ public class PantallaJuego implements Screen
         this.score = score; // Establece la puntuación actual
         
         isPaused = false;
-        ambiente = new Ambient(game, ronda, vidas, score, explosionSound, batch);
+        
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
+        
+        ambiente = new Ambient1(ronda, vidas, score, explosionSound);
         
         initialize(); // Inicializa la configuración del juego
-        ambiente.inicializar();
+        ambiente.inicializarJuego(); // aqui se aplica la secuencia de pasos del metodo template
     }
     
     //Encapsulación de sonido
@@ -63,7 +66,7 @@ public class PantallaJuego implements Screen
     // Método para inicializar variables y recursos 
     private void initialize() {
     	
-        batch = game.getBatch();
+        batch = game.getBatch();  
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 640);
         
@@ -74,17 +77,6 @@ public class PantallaJuego implements Screen
         	modificarAmbiente();
         }
     }
-    
-    
-    //
-    
-    public void handleItemCollisions()
-    {
-    	this.score += ambiente.handleItemCollisions();
-    }
-    
-    //
-    
 
     @Override
     public void pause() {
@@ -151,7 +143,6 @@ public class PantallaJuego implements Screen
             game.setScreen(ss);
         }
     }   
-
     
     // Método para dibujar el encabezado de la interfaz de juego
     private void drawHeader() {
@@ -195,15 +186,11 @@ public class PantallaJuego implements Screen
             score += ambiente.handleCollisions();    // Maneja las colisiones
             ambiente.updateObstaculos();     // Actualiza los satélites
             ambiente.handleObstacleCollisions(); // Maneja las colisiones entre asteroides
-            
+            this.score += ambiente.handleItemCollisions();
         }
        
         ambiente.disparo(batch);
-        ambiente.drawNave(batch, this);
-        
-        ambiente.drawBullets(batch);  // Llama a drawBullets aquí       
-        ambiente.drawObstaculos(batch); //reemplazar por el 
-        ambiente.drawItems(batch);
+        ambiente.dibujarElementos(batch, this);
         
         checkGameOver(); // Verifica si el juego ha terminado 
         batch.end(); // Termina el batch de dibujo
