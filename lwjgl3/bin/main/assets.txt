@@ -9,7 +9,6 @@ gal6.png
 gal7.png
 hurt.ogg
 MainShip3.png
-piano-loops.wav
 pop-sound.mp3
 Rocket2.png
 sat.png
