@@ -30,6 +30,7 @@ public class Player
         
         nave.setVidas(vidas); // Establece las vidas de la nave
         nave.setPosition(Gdx.graphics.getWidth() / 2 - 50, 30);
+        nave.revivir();
     }
     
 
@@ -91,4 +92,3 @@ public class Player
     	}
     }
 }
-

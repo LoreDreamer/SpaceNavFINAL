@@ -17,6 +17,7 @@ public class Nave4 {
     private int vidas = 3;
     private float xVel = 0;
     private float yVel = 0;
+    private final float VELOCIDAD_MAXIMA = 3; // Velocidad máxima constante
     
     private Sprite spr;
     private Sound sonidoHerido;
@@ -58,61 +59,61 @@ public class Nave4 {
     }
     
     public void draw(SpriteBatch batch, PantallaJuego juego){
-    	
-        float x =  spr.getX();
-        float y =  spr.getY();
-        
-        if (paralizado)
-        {
-        	tiempoParalizado -= Gdx.graphics.getDeltaTime();
-        	
-        	if (tiempoParalizado <= 0)
-        	{
-        		paralizado = false;
-        		tiempoParalizado = 0;
-        	}
-        }
-        
-        if (inmune)
-        {
-        	spr.setRegion(txBuffed);
-        	tiempoInmune -= Gdx.graphics.getDeltaTime();
-        	
-        	if (tiempoInmune <= 0)
-        	{
-        		inmune = false;
-        		tiempoInmune = 0;
-        		spr.setRegion(tx);
-        	}
-        }
-        
-        if (!herido && !paralizado) { // que se mueva con teclado
-        	
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) xVel--;
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) xVel++;
-        	if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) yVel--;     
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) yVel++;
-	        
+        float x = spr.getX();
+        float y = spr.getY();
 
-	        if (x+xVel < 0 || x+xVel+spr.getWidth() > Gdx.graphics.getWidth()) // que se mantenga dentro de los bordes de la ventana
-	        	xVel*=-1;
-	        if (y+yVel < 0 || y+yVel+spr.getHeight() > Gdx.graphics.getHeight())
-	        	yVel*=-1;
-	        
-	        spr.setPosition(x+xVel, y+yVel);   
- 		    spr.draw(batch);
- 		    
+        if (paralizado) {
+            tiempoParalizado -= Gdx.graphics.getDeltaTime();
+            if (tiempoParalizado <= 0) {
+                paralizado = false;
+                tiempoParalizado = 0;
+            }
+        }
+
+        if (inmune) {
+            spr.setRegion(txBuffed);
+            tiempoInmune -= Gdx.graphics.getDeltaTime();
+            if (tiempoInmune <= 0) {
+                inmune = false;
+                tiempoInmune = 0;
+                spr.setRegion(tx);
+            }
+        }
+
+        if (!herido && !paralizado) {
+            // Movimiento con teclado
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) xVel -= 1;
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) xVel += 1;
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) yVel -= 1;
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)) yVel += 1;
+
+            // Limitar la velocidad a VELOCIDAD_MAXIMA
+            xVel = MathUtils.clamp(xVel, -VELOCIDAD_MAXIMA, VELOCIDAD_MAXIMA);
+            yVel = MathUtils.clamp(yVel, -VELOCIDAD_MAXIMA, VELOCIDAD_MAXIMA);
+
+            // Verificar límites de la ventana y ajustar la velocidad para evitar que salga
+            if (x + xVel < 0 || x + xVel + spr.getWidth() > Gdx.graphics.getWidth()) {
+                xVel *= -1;
+            }
+            if (y + yVel < 0 || y + yVel + spr.getHeight() > Gdx.graphics.getHeight()) {
+                yVel *= -1;
+            }
+
+            // Actualizar la posición del sprite
+            spr.setPosition(x + xVel, y + yVel);
+            spr.draw(batch);
+
         } else {
-        	
-           spr.setX(spr.getX()+MathUtils.random(-2,2));
- 		   spr.draw(batch); 
- 		   spr.setX(x);
- 		   
- 		   tiempoHerido--;
- 		   
- 		   if (tiempoHerido<=0) herido = false;
- 		 }   
+            // Lógica cuando la nave está herida (temblando)
+            spr.setX(spr.getX() + MathUtils.random(-2, 2));
+            spr.draw(batch);
+            spr.setX(x);
+
+            tiempoHerido--;
+            if (tiempoHerido <= 0) herido = false;
+        }
     }
+
     
     public Bullet disparo(SpriteBatch batch) {
     	
@@ -157,7 +158,7 @@ public class Nave4 {
         return false;
     }
     
-public boolean checkCollision(Item i) {
+    public boolean checkCollision(Item i) {
     	
         if (!inmune && !herido && i.getArea().overlaps(spr.getBoundingRectangle())){
             return true;
@@ -199,9 +200,19 @@ public boolean checkCollision(Item i) {
     	spr.setPosition(x, y);
     }
     
+    public void setSpeedZero() {
+    	xVel = 0;
+    	yVel = 0;
+    }
+    
+    public void revivir() 
+    {	
+    	setSpeedZero();
+    	this.destruida = false;
+    }
+    
     public int getVidas() {return vidas;}
     public int getX() {return (int) spr.getX();}
     public int getY() {return (int) spr.getY();}
 	public void setVidas(int vidas2) {vidas = vidas2;}
 }
-

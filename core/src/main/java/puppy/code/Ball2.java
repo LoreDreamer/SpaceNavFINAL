@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Ball2 extends Obstacle implements Movement {
@@ -14,6 +15,7 @@ public class Ball2 extends Obstacle implements Movement {
     private int xSpeed;   // Velocidad en el eje x
     private int ySpeed;   // Velocidad en el eje y
     private Sprite spr;   // Sprite que representa visualmente a Ball2
+    private final int VELOCIDAD_MAXIMA = 10;
 
     // Constructor de Ball2: inicializa posición, tamaño, velocidad y textura (sprite)
     public Ball2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
@@ -86,6 +88,9 @@ public class Ball2 extends Obstacle implements Movement {
 
         // Actualiza la posición del sprite en pantalla después de cada movimiento
         spr.setPosition(x, y);
+        
+        xSpeed = MathUtils.clamp(xSpeed, -VELOCIDAD_MAXIMA, VELOCIDAD_MAXIMA);
+        ySpeed = MathUtils.clamp(ySpeed, -VELOCIDAD_MAXIMA, VELOCIDAD_MAXIMA);
     }
 
 

@@ -8,31 +8,14 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Star extends Item{
 	
-	private int x;
-	private int y;
-	private int size;
 	private int score;
 	private Effect effect;
 	private Sprite spr;
 	
 	public Star(int x, int y, int size, int score, Effect effect, Texture tx) {
-		this.x = x;
 		
-		if (x - size < 0) this.x = x + size;
-        if (x + size > Gdx.graphics.getWidth()) this.x = x - size;
-        
-        this.y = y;
-        
-        if (y - size < 0) this.y = y + size;
-        if (y + size > Gdx.graphics.getHeight()) this.y = y - size;
-		
-		this.size = size;
-		this.score = score;
-		this.effect = effect;
-		this.spr = new Sprite(tx);
-		
-    	spr.setPosition(x, y);
-    	spr.setBounds(x, y, 45, 45);
+		super(x,y, size, score, effect, tx);
+
 	}
 	
 	@Override
@@ -41,28 +24,17 @@ public class Star extends Item{
     	this.effect = effect;
     }
 	
-	@Override
+    @Override
 	public int updateScore(int scoreActual)
 	{
-        return scoreActual + this.score;
+        return scoreActual + getScore();
 	}
 	
 	@Override
     public void updateEffect(Nave4 nave)
     {
-		this.effect.aplicarEffect(nave);
+		getEffect().aplicarEffect(nave);
 	}
 	
-	
-	//
-	
-	public Rectangle getArea() {
-        return spr.getBoundingRectangle();
-    }
-    
-    public void draw(SpriteBatch batch) {
-        spr.draw(batch);
-    }
-    
     //
 }

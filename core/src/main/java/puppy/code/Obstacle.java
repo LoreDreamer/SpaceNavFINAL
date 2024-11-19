@@ -50,7 +50,7 @@ public abstract class Obstacle implements Movement { // Clase abstracta que impl
             setYSpeed(getYSpeed() * -1);
 
         spr.setPosition(x, y);
-    } 
+    }
     
     public void checkCollision(Obstacle b2) {
         

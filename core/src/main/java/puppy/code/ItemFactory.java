@@ -22,9 +22,9 @@ public class ItemFactory
 				item.setEffect(new Inmune(3));
 				
 				return item;
-			case 1:
+ 			case 1:
 				
-				item = new BlackHole(x, y, size, 10, new Paralizado(2), new Texture(Gdx.files.internal("BlackHole.png")));
+				item = new BlackHole(x, y, size, 10, new Paralizado(2), new Texture(Gdx.files.internal("BlackHole2.png")));
 				item.setEffect(new Paralizado(2));
 				
 				return item;
@@ -66,7 +66,7 @@ public class ItemFactory
         {
             if (jugador.getNave().checkCollision(listItems.get(i))) 
             {
-            	score = 1 + listItems.get(i).updateScore(score);
+            	score = listItems.get(i).updateScore(score);
             	listItems.get(i).updateEffect(jugador.getNave());
             	listItems.remove(i);
                 i--;
