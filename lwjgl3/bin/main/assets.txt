@@ -1,18 +1,19 @@
-aGreyLarge.png
 aGreyMedium4.png
-aGreySmall.png
-BlackHole.png
+BlackHole2.png
+DarkStar.png
 desktop.ini
 explosion.ogg
 gal7.png
 hurt.ogg
 MainShip5.png
 MainShipBuffed3.png
-piano-loops.wav
+MainShipBuffedReloading.png
 pop-sound.mp3
 Rocket2.png
-sat.png
-Satelite.png
-Satelite1.png
+Satelite5.png
+ShipProtected.png
+ShipProtectedReloading.png
+ShipReloading.png
 Smile -  Butterfly.mp3
+SolarWind.png
 Star2.png

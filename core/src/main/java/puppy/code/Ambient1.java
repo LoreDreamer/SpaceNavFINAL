@@ -1,7 +1,5 @@
 package puppy.code;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.audio.Music;
@@ -10,7 +8,6 @@ public class Ambient1 extends AmbientTemplate{
 
 	private Obstacles obstaculos;
 	private ItemFactory items;
-	private int vidas; 
 
 	public Ambient1(int ronda, int vidas, int score, Sound explosionSound) 
 	{

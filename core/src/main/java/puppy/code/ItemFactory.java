@@ -8,45 +8,53 @@ import java.util.Random;
 
 public class ItemFactory
 {
+	private Random rdm = new Random();
 	private ArrayList<Item> listItems = new ArrayList<>();
 	
-	public static Item createItem(int id, int x, int y, int size)
+	public Item createItem(int id, int x, int y)
 	{
 		Item item;
 		
-		switch(id)
+		if (id < 2)
 		{
-			case 0:
-				
-				item = new Star(x, y, size, 200, new Inmune(3), new Texture(Gdx.files.internal("Star2.png")));
-				item.setEffect(new Inmune(3));
-				
-				return item;
-			case 1:
-				
-				item = new BlackHole(x, y, size, 10, new Paralizado(2), new Texture(Gdx.files.internal("BlackHole.png")));
-				item.setEffect(new Paralizado(2));
-				
-				return item;
-			default:
-				
-				item = new Star(x, y, size, 100, new Inmune(2), new Texture(Gdx.files.internal("Star2.png")));
-				item.setEffect(new Inmune(2));
-				
-				return item;
+			if(rdm.nextInt(2) == 0)
+			{
+				item = new BlackHole(x, y, 45 + rdm.nextInt(11),100, new Proteccion(8), new Texture(Gdx.files.internal("SolarWind.png")));
+			}
+			
+			else
+			{
+				item = new BlackHole(x, y, 45 + rdm.nextInt(11),50, new Paralizado(2), new Texture(Gdx.files.internal("BlackHole2.png")));					
+			}
 		}
+		
+		else
+		{
+			if(rdm.nextInt(2) == 0)
+			{
+				item = new Star(x, y, 45 + rdm.nextInt(11), 0, new Confusion(4), new Texture(Gdx.files.internal("DarkStar.png")));
+			}
+			
+			else
+			{
+				item = new Star(x, y, 45 + rdm.nextInt(11),150, new Inmune(3), new Texture(Gdx.files.internal("Star2.png")));
+			}
+			
+		}
+		
+		return item;
 	}
 	
 	public void inicializarItems()
 	{
-		Random rdm = new Random();
 		Item mod;
 		
-		for (int i = 0; i < 2; i++)
+		int cantItems = 1 + rdm.nextInt(3);
+		
+		for (int i = 0; i < cantItems; i++)
 		{
-			mod = createItem(rdm.nextInt(2), rdm.nextInt((int) Gdx.graphics.getWidth()),
-                    50 + rdm.nextInt((int) Gdx.graphics.getHeight() - 50),
-                    20 + rdm.nextInt(10));
+			mod = createItem(rdm.nextInt(3), rdm.nextInt((int) Gdx.graphics.getWidth()),
+                    50 + rdm.nextInt((int) Gdx.graphics.getHeight() - 50));
 			
 			listItems.add(mod);
 		}
@@ -66,7 +74,7 @@ public class ItemFactory
         {
             if (jugador.getNave().checkCollision(listItems.get(i))) 
             {
-            	score = 1 + listItems.get(i).updateScore(score);
+            	score = listItems.get(i).updateScore(score);
             	listItems.get(i).updateEffect(jugador.getNave());
             	listItems.remove(i);
                 i--;

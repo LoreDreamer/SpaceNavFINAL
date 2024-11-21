@@ -44,7 +44,7 @@ public class Obstacles {
 			Obstacle asteroide = new Ball2(
                     r.nextInt((int) Gdx.graphics.getWidth()), // Posición X aleatoria
                     50 + r.nextInt((int) Gdx.graphics.getHeight() - 50), // Posición Y aleatoria
-                    20 + r.nextInt(10), // Tamaño aleatorio
+                    45 + r.nextInt(16),
                     velXAsteroides + r.nextInt(4), // Velocidad X aleatoria
                     velYAsteroides + r.nextInt(4), // Velocidad Y aleatoria
                     new Texture(Gdx.files.internal("aGreyMedium4.png"))); // Textura del asteroide
@@ -59,10 +59,10 @@ public class Obstacles {
             Obstacle satelite = new Satellite(
                     ra.nextInt((int) Gdx.graphics.getWidth()), // Posición X aleatoria
                     50 + ra.nextInt((int) Gdx.graphics.getHeight() - 50), // Posición Y aleatoria
-                    20 + ra.nextInt(10), // Tamaño aleatorio
+                    45 + ra.nextInt(16),
                     velXSatelites + ra.nextInt(4), // Velocidad X aleatoria
                     velYSatelites + ra.nextInt(4), // Velocidad Y aleatoria
-                    new Texture(Gdx.files.internal("sat.png"))); // Textura del satélite
+                    new Texture(Gdx.files.internal("Satelite5.png"))); // Textura del satélite
 
             obstaculos.add(satelite); // Agrega el satélite a la lista
         }

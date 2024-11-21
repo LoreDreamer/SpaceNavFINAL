@@ -8,32 +8,26 @@ import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Item
 {
-	private int x;
-	private int y;
-	private int size;
-	private int score;
-	private Effect effect;
-	private Sprite spr;
+	protected int score;
+	protected Effect effect;
+	protected Sprite spr;
 	
-	/*public Item(int x, int y, int size, int score, Effect effect, Texture tx) {
-		this.x = x;
+	public Item(int x, int y, int size, int score, Effect effect, Texture tx) {
 		
-		if (x - size < 0) this.x = x + size;
-        if (x + size > Gdx.graphics.getWidth()) this.x = x - size;
-        
-        this.y = y;
-        
-        if (y - size < 0) this.y = y + size;
-        if (y + size > Gdx.graphics.getHeight()) this.y = y - size;
-		
-		this.size = size;
-		this.score = score;
-		this.effect = effect;
 		this.spr = new Sprite(tx);
 		
+		if (x - spr.getWidth() < 0) x = x + (int)spr.getWidth();
+        if (x + spr.getWidth() > Gdx.graphics.getWidth()) x = x - (int)spr.getWidth();
+        
+        if (y - spr.getHeight() < 0) y = y + (int)spr.getHeight();
+        if (y + spr.getHeight() > Gdx.graphics.getHeight()) y = y - (int)spr.getHeight();
+		
+		this.score = score;
+		this.effect = effect;
+		
     	spr.setPosition(x, y);
-    	spr.setBounds(x, y, 45, 45);
-	}*/
+    	spr.setBounds(x, y, size, size);
+	}
 	
 	
 	public Rectangle getArea() {
@@ -44,7 +38,15 @@ public abstract class Item
         spr.draw(batch);
     }
     
-    public abstract void setEffect(Effect effect);
+    public void setEffect(Effect effect)
+    {
+    	this.effect = effect;
+    }
+    
+    public void updateEffect(Nave4 nave)
+    {
+    	this.effect.aplicarEffect(nave);
+    }
+    
 	public abstract int updateScore(int score);
-	public abstract void updateEffect(Nave4 nave);
 }

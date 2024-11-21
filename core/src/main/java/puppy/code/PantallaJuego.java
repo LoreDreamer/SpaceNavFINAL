@@ -40,7 +40,7 @@ public class PantallaJuego implements Screen
         this.game = game; // Inicializa la referencia al juego
         this.ronda = ronda; // Establece la ronda actual
         this.score = score; // Establece la puntuación actual
-        
+
         isPaused = false;
         
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
@@ -66,7 +66,7 @@ public class PantallaJuego implements Screen
     // Método para inicializar variables y recursos 
     private void initialize() {
     	
-        batch = game.getBatch();  
+        batch = game.getBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 640);
         
@@ -143,6 +143,7 @@ public class PantallaJuego implements Screen
             game.setScreen(ss);
         }
     }   
+
     
     // Método para dibujar el encabezado de la interfaz de juego
     private void drawHeader() {
@@ -188,8 +189,7 @@ public class PantallaJuego implements Screen
             ambiente.handleObstacleCollisions(); // Maneja las colisiones entre asteroides
             this.score += ambiente.handleItemCollisions();
         }
-       
-        ambiente.disparo(batch);
+             
         ambiente.dibujarElementos(batch, this);
         
         checkGameOver(); // Verifica si el juego ha terminado 

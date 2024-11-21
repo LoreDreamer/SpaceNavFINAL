@@ -14,22 +14,23 @@ public abstract class Obstacle implements Movement { // Clase abstracta que impl
     private int ySpeed;
     private Sprite spr;
 
-    public Obstacle(int x, int y, int size, int xSpeed, int ySpeed, Texture tx)  { // Constructor de Obstacle: inicializa posición, tamaño, velocidad y textura (sprite)
+    public Obstacle(int x, int y,int size, int xSpeed, int ySpeed, Texture tx)  { // Constructor de Obstacle: inicializa posición, tamaño, velocidad y textura (sprite)
     	
         spr = new Sprite(tx);
         this.x = x;
 
         // Validar que el borde de la esfera no quede fuera de la pantalla
-        if (x - size < 0) this.x = x + size;
-        if (x + size > Gdx.graphics.getWidth()) this.x = x - size;
+        if (x - spr.getWidth() < 0) this.x = x + (int)spr.getWidth();
+        if (x + spr.getWidth() > Gdx.graphics.getWidth()) this.x = x - (int)spr.getWidth();
         
         this.y = y;
         
         // Validar que el borde de la esfera no quede fuera de la pantalla
-        if (y - size < 0) this.y = y + size;
-        if (y + size > Gdx.graphics.getHeight()) this.y = y - size;
+        if (y - spr.getHeight() < 0) this.y = y + (int)spr.getHeight();
+        if (y + spr.getHeight() > Gdx.graphics.getHeight()) this.y = y - (int)spr.getHeight();
 
         spr.setPosition(x, y);
+        spr.setBounds(x, y, size, size);
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
     }
@@ -50,7 +51,7 @@ public abstract class Obstacle implements Movement { // Clase abstracta que impl
             setYSpeed(getYSpeed() * -1);
 
         spr.setPosition(x, y);
-    } 
+    }
     
     public void checkCollision(Obstacle b2) {
         

@@ -4,35 +4,32 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import java.util.Random;
 
 public class Satellite extends Obstacle 
 { 
     private float scale; // Tamaño del satélite
+    private int movimiento;
     private int bulletHitCount; // Contador de impactos de bala
-    private static final int TARGET_SIZE_PX = 40; // Tamaño deseado en píxeles (1 cm)
 
     // Constructor de la clase Satellite
     public Satellite(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
     	
         super(x, y, size, xSpeed, ySpeed, tx);
         
-        // Escala para ajustar al tamaño deseado
-        this.scale = (float) TARGET_SIZE_PX / size; 
-        getSpr().setSize(getSpr().getWidth() * scale, getSpr().getHeight() * scale);
+        Random rdm = new Random();
+        
+        if (rdm.nextInt(2) % 2 == 0)
+        	movimiento = 0;
+        else
+        	movimiento = 1;
+        
         this.bulletHitCount = 0; 
     }
 
     // Getters y setters para el encapsulamiento de datos
     public float getScale() {
         return scale;
-    }
-
-    public void setScale(float scale) {
-    	
-        this.scale = scale;
-        // Aplica el cambio de escala al sprite
-        getSpr().setSize(TARGET_SIZE_PX * scale, TARGET_SIZE_PX * scale);
-        
     }
 
     public int getBulletHitCount() {
@@ -46,6 +43,12 @@ public class Satellite extends Obstacle
     // Método de movimiento que implementa el comportamiento de la interfaz Movement
     @Override
     public void move() {
+    	
+    	if (movimiento == 0)
+    		setXSpeed(0);
+    	else
+    		setYSpeed(0);
+    	
         // Update position based on speed
         setX(getX() + getXSpeed());
         setY(getY() + getYSpeed());
@@ -76,8 +79,6 @@ public class Satellite extends Obstacle
     @Override
     public void draw(SpriteBatch batch) {
     	
-        getSpr().setSize(TARGET_SIZE_PX * scale, TARGET_SIZE_PX * scale); 
-        getSpr().setPosition(getX(), getY());
         getSpr().draw(batch);
         
     }

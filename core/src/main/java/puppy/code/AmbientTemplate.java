@@ -2,9 +2,7 @@ package puppy.code;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /*dejé aqui lo de jugador porque la justificacion del template es que si a futuro se quieren implementar mas y diferentes
@@ -38,6 +36,7 @@ public abstract class AmbientTemplate
 	
 	public final void dibujarElementos(SpriteBatch batch, PantallaJuego game) //secuencia de pasos para dibujar los elementos del juego
 	{
+		disparo(batch);
         drawNave(batch, game);   //método concreto
         drawBullets(batch);       //método concreto
         dibujarObstaculos(batch);  //metodo abstracto a implementar en las subclases
