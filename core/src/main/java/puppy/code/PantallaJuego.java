@@ -204,4 +204,3 @@ public class PantallaJuego implements Screen
     	ambiente.ambienteModificar();
     }
 }
-
