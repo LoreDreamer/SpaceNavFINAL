@@ -12,30 +12,36 @@ public class PantallaMenu implements Screen { // Implementa la interfaz Screen
     private OrthographicCamera camera; // Cámara para proyectar la vista
 
     public PantallaMenu(SpaceNavigation game) {
+    	
         this.game = game; // Inicializa la referencia al juego
         
         camera = new OrthographicCamera(); // Crea una nueva cámara ortográfica
         camera.setToOrtho(false, 1200, 800); // Establece el tamaño de la cámara
+        
     }
 
     @Override
     public void render(float delta) { // Método para renderizar la pantalla
+    	
         ScreenUtils.clear(0, 0, 0.2f, 1); // Limpia la pantalla con un color de fondo
 
         camera.update(); // Actualiza la cámara
         game.getBatch().setProjectionMatrix(camera.combined); // Establece la matriz de proyección
 
         game.getBatch().begin(); // Comienza a dibujar
+        
         // Dibuja el texto de bienvenida y las instrucciones
+        
         game.getFont().draw(game.getBatch(), "¡Bienvenido a Space Navigation!", 140, 400);
         game.getFont().draw(game.getBatch(), "Aprieta o clickea para empezar.", 100, 300);
-        game.getBatch().end(); // Finaliza el dibujo
+        game.getBatch().end();
 
         // Detecta si el usuario toca la pantalla o presiona una tecla
         if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-            // Crea una nueva pantalla de juego
-            Screen ss = new PantallaJuego(game, 1, 3, 0); // 7 
+        
+            Screen ss = new PantallaJuego(game, 1, 3, 0);
             ss.resize(1200, 800); // Ajusta el tamaño de la nueva pantalla
+            
             game.setScreen(ss); // Cambia a la nueva pantalla
             dispose(); // Libera los recursos de la pantalla actual
         }

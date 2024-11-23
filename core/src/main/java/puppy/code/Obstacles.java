@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.audio.Sound;
 
 
-public class Obstacles {
+public class Obstacles { // Clase que contiene todos los obstaculos dentro del juego y los maneja
 	
 	private int velXAsteroides;
     private int velYAsteroides;

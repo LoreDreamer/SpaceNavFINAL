@@ -1,8 +1,9 @@
 package puppy.code;
 
-public class Confusion implements Effect
+public class Confusion implements Effect // cambia los controles
 {
-private float time;
+	
+	private float time;
 	
 	public Confusion(float time)
 	{

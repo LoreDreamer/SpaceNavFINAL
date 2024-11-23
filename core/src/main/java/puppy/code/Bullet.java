@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-
 public class Bullet {
 
 	private int xSpeed;
 	private int ySpeed;
+	
 	private boolean destroyed = false;
 	private Sprite spr;
 	    
@@ -43,12 +43,13 @@ public class Bullet {
 	    
 	public boolean checkCollision(Obstacle b2) {
 		
-		if(spr.getBoundingRectangle().overlaps(b2.getArea())) {// Se destruyen ambos	
+		if(spr.getBoundingRectangle().overlaps(b2.getArea())) { // Se destruyen ambos	
 			
 			this.destroyed = true;
 	        return true;	
 	        
 		}
+		
 		return false;
 	}
 	    

@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
-public class Nave4 {
+public class Nave4 { // Clase Singleton
 	
-	//Instancia de nave unica
-	private static Nave4 navePlayer;
+	private static Nave4 navePlayer; //Instancia de nave unica
 	
 	private boolean destruida = false;
     private int vidas = 3;
@@ -21,7 +20,8 @@ public class Nave4 {
     private Sprite spr;
     private Sound sonidoHerido;
     private Sound soundBala;
-    private Texture txBala;
+    
+    private Texture txBala; // textura bala
     private Texture tx; // textura base
     private Texture txBuffed; // textura con Invulnerabilidad
     private Texture txProtected;  // textura con proteccion
@@ -29,14 +29,18 @@ public class Nave4 {
     private int cantBalas = 16;
     private float recarga = 4;
     private boolean inmune = false;
+    
     private float tiempoInmune = 0;
     private boolean paralizado = false;
     private float tiempoParalizado = 0;
+    
     private boolean protegido = false;
     private float tiempoProtegido = 0;
     private boolean confuso = false;
+    
     private float tiempoConfuso = 0;
     private boolean herido = false;
+    
     private int tiempoHeridoMax = 50;
     private int tiempoHerido;
 
@@ -57,7 +61,7 @@ public class Nave4 {
     }
     
     // Metodo para obtener el objeto unico nave
-    public static Nave4 getNavePlayer(int x, int y, Texture tx, Texture txBuffed, Texture txProtected, Sound soundChoque, Texture txBala, Sound soundBala)
+    public static Nave4 getNavePlayer(int x, int y, Texture tx, Texture txBuffed, Texture txProtected, Sound soundChoque, Texture txBala, Sound soundBala) 
     {
     	if (navePlayer == null)
     		navePlayer = new Nave4(x, y, tx, txBuffed, txProtected, soundChoque, txBala, soundBala);
@@ -70,7 +74,7 @@ public class Nave4 {
         float x =  spr.getX();
         float y =  spr.getY();
         
-        if (confuso)
+        if (confuso) // Si los controles se encuentran invertidos
         {
         	tiempoConfuso -= Gdx.graphics.getDeltaTime();
         	
@@ -81,7 +85,7 @@ public class Nave4 {
         	}
         }
         
-        if (protegido)
+        if (protegido) // Si se encuentra con escudo
         {
         	spr.setRegion(txProtected);
         	tiempoProtegido -= Gdx.graphics.getDeltaTime();
@@ -94,7 +98,7 @@ public class Nave4 {
         	}
         }
         
-        if (paralizado)
+        if (paralizado) // Si no se puede mover
         {
         	tiempoParalizado -= Gdx.graphics.getDeltaTime();
         	
@@ -105,7 +109,7 @@ public class Nave4 {
         	}
         }
         
-        if (inmune)
+        if (inmune) // Si no se le puede hacer daño
         {
         	spr.setRegion(txBuffed);
         	tiempoInmune -= Gdx.graphics.getDeltaTime();
@@ -119,12 +123,13 @@ public class Nave4 {
         }
         
         
-        if (!herido && !paralizado) { // que se mueva con teclado
+        if (!herido && !paralizado) { // que se mueva con teclado en cualquier otro caso
         	
         	if (confuso)
         	{
         		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) xVel++;
         		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) xVel--;
+        		
         		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) yVel++;     
         		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) yVel--;
         	}
@@ -133,6 +138,7 @@ public class Nave4 {
         	{
         		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) xVel--;
         		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) xVel++;
+        		
         		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) yVel--;     
         		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) yVel++;
         	}
@@ -226,22 +232,20 @@ public class Nave4 {
             
             sonidoHerido.play();
             
-            if(!protegido)
-            {
+            if (!protegido) {
+            	
             	vidas--;
             	herido = true;
   		    	tiempoHerido=tiempoHeridoMax;
-  		    
-  		    
-  		    
+  		   
   		    	if (vidas<=0)
   		    		destruida = true; 
-            }
-            
-            else
-            {
+  		    	
+            } else {
+            	
             	protegido = false;
             	spr.setRegion(tx);
+            	
             }
             
             return true;
@@ -250,13 +254,16 @@ public class Nave4 {
         return false;
     }
     
-public boolean checkCollision(Item i) {
+    public boolean checkCollision(Item i) { // Revisión de colisiones con items
     	
-        if (!inmune && !herido && i.getArea().overlaps(spr.getBoundingRectangle())){
+        if (!inmune && !herido && i.getArea().overlaps(spr.getBoundingRectangle())) {
             return true;
         }
+        
         return false;
     }
+    
+    // Métodos simples
     
     public boolean estaDestruido() {
        return !herido && destruida;
@@ -314,22 +321,30 @@ public boolean checkCollision(Item i) {
     	this.yVel = 0;
     }
     
-    public void revivir()
-    {
+    // En caso de que el jugador muera, se reinicia y revive.
+    
+    public void revivir() {
+    	
     	destruida = false;
     	this.inmune = true;
     	this.tiempoInmune = 2;
+    	
     	this.confuso = false;
     	this.tiempoConfuso = 0;
     	this.protegido = false;
+    	
     	this.tiempoProtegido = 0;
     	this.paralizado = false;
+    	
     	this.tiempoParalizado = 0;
     	this.cantBalas = 16;
     }
+    
+    // Métodos básicos (2)
     
     public int getVidas() {return vidas;}
     public int getX() {return (int) spr.getX();}
     public int getY() {return (int) spr.getY();}
 	public void setVidas(int vidas2) {vidas = vidas2;}
+	
 }

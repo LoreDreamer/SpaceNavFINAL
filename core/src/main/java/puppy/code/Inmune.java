@@ -1,6 +1,6 @@
 package puppy.code;
 
-public class Inmune implements Effect{
+public class Inmune implements Effect { // Para que el jugador no se haga daño durante un cierto tiempo.
 
 	private float time;
 	

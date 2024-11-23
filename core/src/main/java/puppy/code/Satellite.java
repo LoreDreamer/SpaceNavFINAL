@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import java.util.Random;
 
-public class Satellite extends Obstacle 
+public class Satellite extends Obstacle // segundo obstaculo del juego, tiene más vida.
 { 
     private float scale; // Tamaño del satélite
     private int movimiento;
@@ -49,11 +49,9 @@ public class Satellite extends Obstacle
     	else
     		setYSpeed(0);
     	
-        // Update position based on speed
         setX(getX() + getXSpeed());
         setY(getY() + getYSpeed());
 
-        // Screen dimensions
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
@@ -64,7 +62,6 @@ public class Satellite extends Obstacle
             setYSpeed(-getYSpeed());
         }
 
-        // Update the position of the sprite
         getSpr().setPosition(getX(), getY());
     }
 
@@ -78,9 +75,7 @@ public class Satellite extends Obstacle
     // Método para dibujar el satélite
     @Override
     public void draw(SpriteBatch batch) {
-    	
-        getSpr().draw(batch);
-        
+        getSpr().draw(batch);    
     }
 
     // Método para verificar la colisión con otro obstáculo

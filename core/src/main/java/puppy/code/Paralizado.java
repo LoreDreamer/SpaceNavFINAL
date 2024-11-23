@@ -1,6 +1,6 @@
 package puppy.code;
 
-public class Paralizado implements Effect{
+public class Paralizado implements Effect { // Clase que hace que el jugador no se mueve (o mejor que le da el tiempo y despues se hace en otra parte mediante otras cosas)
 
 	private float time;
 	

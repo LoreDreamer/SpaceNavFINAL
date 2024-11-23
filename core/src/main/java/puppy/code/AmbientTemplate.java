@@ -22,9 +22,11 @@ public abstract class AmbientTemplate
 	private int vidas;
 	
 	public AmbientTemplate(int ronda, int vidas, int score, Sound sonidoExplocion) {
+		
 		this.vidas = vidas;
 		this.sonidoExplocion = sonidoExplocion;
 		this.jugador = new Player();
+		
 	}
 	
 	public final void inicializarJuego() //secuencia de pasos para crear los elementos necesarios del juego
@@ -88,6 +90,7 @@ public abstract class AmbientTemplate
 	}
 	
 	// Métodos abstractos a implemengtar en las subclases
+	
     protected abstract void crearObstaculos();
     protected abstract void crearItems();
     protected abstract void dibujarObstaculos(SpriteBatch batch);

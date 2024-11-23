@@ -26,8 +26,8 @@ public class PantallaGameOver implements Screen {
 		game.getBatch().setProjectionMatrix(camera.combined);
 
 		game.getBatch().begin();
-		game.getFont().draw(game.getBatch(), "Game Over !!! ", 120, 400,400,1,true);
-		game.getFont().draw(game.getBatch(), "Pincha en cualquier lado para reiniciar ...", 100, 300);
+		game.getFont().draw(game.getBatch(), "¡Game Over!", 120, 400,400,1,true);
+		game.getFont().draw(game.getBatch(), "Presione en cualquier parte de la pantalla para continuar...", 100, 300);
 	
 		game.getBatch().end();
 

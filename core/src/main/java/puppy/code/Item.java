@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public abstract class Item
+public abstract class Item // Parte del Item Factory/Abstract Factory
 {
 	protected int score;
 	protected Effect effect;

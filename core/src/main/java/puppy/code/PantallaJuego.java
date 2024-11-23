@@ -14,13 +14,15 @@ import com.badlogic.gdx.graphics.Mesh;
 /**
  * Clase PantallaJuego implementa la pantalla principal del juego,
  * donde se desarrollan las mecánicas del juego como la nave,
- * los asteroides, las balas y las colisiones.
+ * los asteroides, las balas y las colisiones. Delega el resto de ciertas
+ * cosas a otras clases.
  */
  
 public class PantallaJuego implements Screen 
 {
     private SpaceNavigation game; // Referencia al juego principal
     private OrthographicCamera camera; // Cámara para la visualización
+    
     private SpriteBatch batch; // Batch para dibujar sprites
     private boolean isPaused; // Variable para controlar el estado de pausa
 
@@ -32,6 +34,7 @@ public class PantallaJuego implements Screen
 
     private SpriteBatch spriteBatch;
     private Mesh mesh;
+    
     private Texture fondo;
     private Ambient1 ambiente;
 

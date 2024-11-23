@@ -10,8 +10,10 @@ public abstract class Obstacle implements Movement { // Clase abstracta que impl
    
     private int x;
     private int y;
+    
     private int xSpeed;
     private int ySpeed;
+    
     private Sprite spr;
 
     public Obstacle(int x, int y,int size, int xSpeed, int ySpeed, Texture tx)  { // Constructor de Obstacle: inicializa posición, tamaño, velocidad y textura (sprite)

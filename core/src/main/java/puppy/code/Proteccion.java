@@ -1,6 +1,6 @@
 package puppy.code;
 
-public class Proteccion implements Effect
+public class Proteccion implements Effect // Implementación de protección
 {
 	private float time;
 	

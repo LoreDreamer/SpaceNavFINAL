@@ -6,8 +6,8 @@ import com.badlogic.gdx.audio.Music;
 
 public class Ambient1 extends AmbientTemplate{
 
-	private Obstacles obstaculos;
-	private ItemFactory items;
+	private Obstacles obstaculos; // Listado de obstáculos
+	private ItemFactory items; // Listado de items
 
 	public Ambient1(int ronda, int vidas, int score, Sound explosionSound) 
 	{

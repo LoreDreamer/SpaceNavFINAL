@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Player 
+public class Player // Clase que maneja el Singleton y lo contiene dentro de sus datos. Si bien no lo maneja directamente, toma las acciones necesarias y se las delega al propio Singleton para que las haga.
 {
 
 	private Nave4 nave; //objeto nave
@@ -52,7 +52,6 @@ public class Player
     
     public boolean agregarBala(Bullet bb) {
         return balas.add(bb);
-        
     }
 
     public Nave4 getNave() {
@@ -91,10 +90,5 @@ public class Player
     	if (nave.disparo(batch) != null) {
     		agregarBala(nave.disparo(batch));
     	}
-    }
-    
-    public void recargar()
-    {
-    	
     }
 }

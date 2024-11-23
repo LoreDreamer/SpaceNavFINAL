@@ -1,4 +1,7 @@
+aGreyLarge.png
 aGreyMedium4.png
+aGreySmall.png
+BlackHole.png
 BlackHole2.png
 DarkStar.png
 desktop.ini
@@ -10,6 +13,9 @@ MainShipBuffed3.png
 MainShipBuffedReloading.png
 pop-sound.mp3
 Rocket2.png
+sat.png
+Satelite.png
+Satelite1.png
 Satelite5.png
 ShipProtected.png
 ShipProtectedReloading.png

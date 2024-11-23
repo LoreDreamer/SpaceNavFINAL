@@ -8,6 +8,7 @@ import java.util.Random;
 
 public class ItemFactory
 {
+	
 	private Random rdm = new Random();
 	private ArrayList<Item> listItems = new ArrayList<>();
 	
@@ -32,7 +33,7 @@ public class ItemFactory
 		{
 			if(rdm.nextInt(2) == 0)
 			{
-				item = new Star(x, y, 45 + rdm.nextInt(11), 0, new Confusion(4), new Texture(Gdx.files.internal("DarkStar.png")));
+				item = new Star(x, y, 45 + rdm.nextInt(11), 250, new Confusion(4), new Texture(Gdx.files.internal("DarkStar.png")));
 			}
 			
 			else
